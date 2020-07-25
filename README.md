@@ -36,7 +36,16 @@ Current Routes Available.
 
 | NAME | TYPE | REQ | RES    | HEADER |
 | ---- | ---- | --- | ------ | ------ |
-| /    | GET  | N/A | OBJECT | N/A    |
+| /api | GET  | N/A | OBJECT | N/A    |
+
+### Schemas
+
+#### User
+
+{
+username: `String`,
+password: `String`,
+}
 
 ## License
 
