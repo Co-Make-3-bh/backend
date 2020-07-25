@@ -9,6 +9,7 @@ router.post("/register", helpers.verifyBody, async (req, res) => {
   const hash = await bcrypt.hashSync(req.body.password, salt);
 
   const user = {
+    email: req.body.email,
     username: req.body.username,
     password: hash,
   };
