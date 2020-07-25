@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const bcrypt = require("bcryptjs");
+const nodemailer = require("nodemailer");
 
 const helpers = require("./authHelpers");
 const db = require("../../database/usersAccess");
@@ -9,12 +10,33 @@ router.post("/register", helpers.verifyBody, async (req, res) => {
   const hash = await bcrypt.hashSync(req.body.password, salt);
 
   const emailOutput = `
-  <p>Thank you for signing up!</p>
+  <p>Thank you for signing up for CoMake!</p>
   <h3>Registration Details</h3>
   <p>username: ${req.body.username}</p>
   <p>email: ${req.body.email}</p>
   <h3>Login now if you haven't already!</h3>
 `;
+
+  let transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
+    auth: {
+      user: "comakenotifier@gmail.com",
+      pass: "comakepassword",
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
+  });
+
+  let mailOptions = {
+    from: '"Contact" <comakenotifier@gmail.com>',
+    to: req.body.email,
+    subject: "Thank You For Registering For CoMake!",
+    text: "",
+    html: emailOutput,
+  };
 
   const user = {
     email: req.body.email,
@@ -24,6 +46,11 @@ router.post("/register", helpers.verifyBody, async (req, res) => {
 
   db.create(user)
     .then(async (saved) => {
+      await transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          return console.log(error);
+        }
+      });
       const token = await helpers.genJWT(saved);
 
       res.status(201).json({ data: saved, token });
