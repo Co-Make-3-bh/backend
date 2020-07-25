@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 function verifyBody(req, res, next) {
   if (
@@ -23,4 +24,9 @@ async function genJWT(user) {
   return token;
 }
 
-module.exports = { verifyBody, genJWT };
+async function verifyPassword(password, hash) {
+  const verified = await bcrypt.compareSync(password, hash);
+  return verified;
+}
+
+module.exports = { verifyBody, genJWT, verifyPassword };

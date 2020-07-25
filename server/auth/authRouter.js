@@ -60,4 +60,28 @@ router.post("/register", helpers.verifyBody, async (req, res) => {
     });
 });
 
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  const user = await db.findByEmail(email);
+  if (!user) {
+    return res.status(400).json({ error: "Email Or Password is Incorrect" });
+  }
+
+  const verified = await helpers.verifyPassword(password, user.password);
+
+  if (!verified) {
+    return res.status(400).json({ error: "Email Or Password is Incorrect" });
+  }
+
+  const token = await helpers.genJWT(user);
+
+  const toSend = {
+    username: user.username,
+    email: user.email,
+  };
+
+  res.status(200).json({ data: toSend, token });
+});
+
 module.exports = router;

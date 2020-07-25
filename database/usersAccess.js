@@ -8,4 +8,8 @@ function create(user) {
     });
 }
 
-module.exports = { create };
+function findByEmail(email) {
+  return db("users").where({ email }).first();
+}
+
+module.exports = { create, findByEmail };

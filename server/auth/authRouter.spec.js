@@ -33,7 +33,35 @@ describe("auth - register", () => {
 });
 
 describe("auth - login", () => {
-  test.todo("will send a token back");
+  it("should return a token", async () => {
+    const userLogin = {
+      email: "legendarycomedy1@gmail.com",
+      password: "example",
+    };
 
-  test.todo("will send back 400 if password is invalid");
+    const expected = "string";
+
+    const actual = await request(server)
+      .post("/api/auth/login")
+      .send(userLogin);
+
+    expect(typeof actual.body.token).toBe(expected);
+  });
+
+  it("should return 400 if password is incorrect with error message", async () => {
+    const userLogin = {
+      email: "legendarycomedy1@gmail.com",
+      password: "examplewrong",
+    };
+
+    const expectedStatus = 400;
+    const expectedMessage = "Email Or Password is Incorrect";
+
+    const actual = await request(server)
+      .post("/api/auth/login")
+      .send(userLogin);
+
+    expect(actual.body.error).toBe(expectedMessage);
+    expect(actual.status).toBe(expectedStatus);
+  });
 });
