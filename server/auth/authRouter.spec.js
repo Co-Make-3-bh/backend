@@ -2,9 +2,10 @@ const request = require("supertest");
 
 const server = require("../server");
 
-const uuid = require("uuid");
+const nodemailer = require("nodemailer");
 
 let body = {
+  email: `EMAIL@EMAIL.COM${Math.random()}`,
   username: `${Math.random()}`,
   password: "testing",
 };
@@ -20,6 +21,7 @@ describe("auth - register", () => {
 
   it("creates a user and returns the created user", async () => {
     let expected = {
+      email: `EMAIL@EMAIL.COM${Math.random()}`,
       username: `${Math.random()}`,
       password: "testing",
     };
@@ -28,4 +30,10 @@ describe("auth - register", () => {
 
     expect(typeof res.body.data).toBe("object");
   });
+});
+
+describe("auth - login", () => {
+  test.todo("will send a token back");
+
+  test.todo("will send back 400 if password is invalid");
 });
