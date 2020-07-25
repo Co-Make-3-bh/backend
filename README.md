@@ -1,6 +1,6 @@
-# QuickNotes API
+# CoMake API
 
-> PENDING URL
+> https://comake-api.herokuapp.com/api
 
 # New Features!
 
