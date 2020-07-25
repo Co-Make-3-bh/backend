@@ -2,14 +2,6 @@
 
 > PENDING URL
 
-The QuickNotes API Dependencies
-
-- NodeJS
-- Express
-- Bcrypt
-- JWT
-- PG
-
 # New Features!
 
 > Last Updated: 7/24/2020 6:57 PM
