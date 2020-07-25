@@ -2,6 +2,8 @@ const request = require("supertest");
 
 const server = require("../server");
 
+const nodemailer = require("nodemailer");
+
 let body = {
   email: `EMAIL@EMAIL.COM${Math.random()}`,
   username: `${Math.random()}`,
