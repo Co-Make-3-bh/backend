@@ -1,3 +1,5 @@
+const jwt = require("jsonwebtoken");
+
 function verifyBody(req, res, next) {
   if (
     !req.body.hasOwnProperty("username") &&
@@ -10,4 +12,15 @@ function verifyBody(req, res, next) {
   }
 }
 
-module.exports = { verifyBody };
+async function genJWT(user) {
+  const secret = process.env.JWT_SECRET;
+
+  const payload = {
+    id: user.id,
+    username: user.username,
+  };
+  const token = await jwt.sign(payload, secret);
+  return token;
+}
+
+module.exports = { verifyBody, genJWT };
