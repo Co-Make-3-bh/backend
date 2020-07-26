@@ -4,7 +4,12 @@ exports.up = function (knex) {
     tbl.string("title").notNullable();
     tbl.string("description").notNullable();
     tbl.integer("upvotes").unsigned().defaultTo(0);
-    tbl.string("createdBy").notNullable();
+    tbl
+      .integer("createdBy")
+      .unsigned()
+      .notNullable()
+      .references("id")
+      .inTable("users");
   });
 };
 

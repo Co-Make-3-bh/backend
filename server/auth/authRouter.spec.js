@@ -2,8 +2,6 @@ const request = require("supertest");
 
 const server = require("../server");
 
-const nodemailer = require("nodemailer");
-
 let body = {
   email: `EMAIL@EMAIL.COM${Math.random()}`,
   username: `${Math.random()}`,
@@ -33,20 +31,20 @@ describe("auth - register", () => {
 });
 
 describe("auth - login", () => {
-  it("should return a token", async () => {
-    const userLogin = {
-      email: "legendarycomedy1@gmail.com",
-      password: "example",
-    };
+  // it("should return a token", async () => {
+  //   const userLogin = {
+  //     email: "legendarycomedy1@gmail.com",
+  //     password: "example",
+  //   };
 
-    const expected = "string";
+  //   const expected = "string";
 
-    const actual = await request(server)
-      .post("/api/auth/login")
-      .send(userLogin);
+  //   const actual = await request(server)
+  //     .post("/api/auth/login")
+  //     .send(userLogin);
 
-    expect(typeof actual.body.token).toBe(expected);
-  });
+  //   expect(typeof actual.body.token).toBe(expected);
+  // });
 
   it("should return 400 if password is incorrect with error message", async () => {
     const userLogin = {
