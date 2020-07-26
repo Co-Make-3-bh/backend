@@ -46,4 +46,12 @@ describe("concerns", () => {
 
     expect(actual.status).toBe(expected);
   });
+
+  it("returns a status of 200 on user posts by id", async () => {
+    const expected = 200;
+
+    const actual = await request(server).get(`/api/concerns/createdBy/0`);
+
+    expect(actual.status).toBe(expected);
+  });
 });

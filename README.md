@@ -26,11 +26,14 @@ $ npm run start
 
 Current Routes Available.
 
-| NAME               | TYPE | REQ                         | RES                                | HEADER |
-| ------------------ | ---- | --------------------------- | ---------------------------------- | ------ |
-| /api               | GET  | N/A                         | OBJECT                             | N/A    |
-| /api/auth/register | POST | {username, password, email} | {user, token}                      | N/A    |
-| /api/auth/login    | POST | {email, password}           | {user.email, user.username, token} | N/A    |
+| NAME                           | TYPE | REQ                             | RES                                | HEADER        |
+| ------------------------------ | ---- | ------------------------------- | ---------------------------------- | ------------- |
+| /api                           | GET  | N/A                             | OBJECT                             | N/A           |
+| /api/auth/register             | POST | {username, password, email}     | {user, token}                      | N/A           |
+| /api/auth/login                | POST | {email, password}               | {user.email, user.username, token} | N/A           |
+| /api/concerns                  | GET  | N/A                             | ARRAY                              | Authorization |
+| /api/concerns                  | POST | {title, description, createdBy} | AFFECTED                           | Authorization |
+| /api/concerns/createdBy/userId | GET  | N/A                             | ARRAY                              | Authorization |
 
 ### Schemas
 
