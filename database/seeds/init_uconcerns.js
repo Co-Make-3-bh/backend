@@ -1,15 +1,15 @@
 exports.seed = function (knex) {
   // Deletes ALL existing entries
-  return knex("users")
+  return knex("concerns")
     .del()
     .then(function () {
       // Inserts seed entries
-      return knex("users").insert([
+      return knex("concerns").insert([
         {
           id: 0,
-          username: "Admin",
-          password: "example",
-          email: "legendarycomedy1@gmail.com",
+          title: "Greatest Concern",
+          description: "concern seed 1",
+          createdBy: 0,
         },
       ]);
     });
