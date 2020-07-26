@@ -19,6 +19,31 @@ describe("concerns", () => {
     expect(actual.status).toBe(expected);
   });
 
-  test.todo("It can create a concern");
-  test.todo("Returns a status of 201 on creation");
+  it("can create a concern", async () => {
+    const post = {
+      title: "Example",
+      description: "Example Desc",
+      createdBy: 0,
+    };
+
+    const expected = "object";
+
+    const actual = await request(server).post("/api/concerns").send(post);
+
+    expect(typeof actual.body.data).toBe(expected);
+  });
+
+  it("returns a status of 201 on creation", async () => {
+    const post = {
+      title: "Example",
+      description: "Example Desc",
+      createdBy: 0,
+    };
+
+    const expected = 201;
+
+    const actual = await request(server).post("/api/concerns").send(post);
+
+    expect(actual.status).toBe(expected);
+  });
 });
