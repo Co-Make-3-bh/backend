@@ -24,6 +24,7 @@ describe("concerns", () => {
       title: "Example",
       description: "Example Desc",
       createdBy: 0,
+      zip: "49441",
     };
 
     const expected = "object";
@@ -38,6 +39,7 @@ describe("concerns", () => {
       title: "Example",
       description: "Example Desc",
       createdBy: 0,
+      zip: "49442",
     };
 
     const expected = 201;
@@ -51,6 +53,31 @@ describe("concerns", () => {
     const expected = 200;
 
     const actual = await request(server).get(`/api/concerns/createdBy/0`);
+
+    expect(actual.status).toBe(expected);
+  });
+
+  it("returns a status of 200 on get by zip", async () => {
+    const expected = 200;
+
+    const actual = await request(server).get(`/api/concerns/byZip/49441`);
+    expect(actual.status).toBe(expected);
+  });
+
+  it("returns a list of records by zip", async () => {
+    const expected = "object";
+
+    const actual = await request(server).get(`/api/concerns/byZip/49441`);
+
+    expect(typeof actual.body.data[0]).toBe(expected);
+  });
+
+  it("edits a concern", async () => {
+    const expected = 201;
+
+    const actual = await request(server)
+      .put("/api/concerns/0")
+      .send({ title: "UPDATED HAHA" });
 
     expect(actual.status).toBe(expected);
   });
