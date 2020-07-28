@@ -42,6 +42,7 @@ router.post("/register", helpers.verifyBody, async (req, res) => {
     email: req.body.email,
     username: req.body.username,
     password: hash,
+    zip: req.body.zip,
   };
 
   db.create(user)
