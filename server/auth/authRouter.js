@@ -79,6 +79,8 @@ router.post("/login", async (req, res) => {
   const toSend = {
     username: user.username,
     email: user.email,
+    id: user.id,
+    zip: user.zip,
   };
 
   res.status(200).json({ data: toSend, token });

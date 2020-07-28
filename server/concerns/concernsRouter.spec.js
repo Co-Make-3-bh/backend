@@ -54,4 +54,12 @@ describe("concerns", () => {
 
     expect(actual.status).toBe(expected);
   });
+
+  it("returns a status of 204 on delete", async () => {
+    const expected = 204;
+
+    const actual = await request(server).delete("/api/concerns/1");
+
+    expect(actual.status).toBe(expected);
+  });
 });
