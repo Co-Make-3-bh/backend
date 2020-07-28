@@ -81,4 +81,20 @@ describe("concerns", () => {
 
     expect(actual.status).toBe(expected);
   });
+
+  it("deletes a return and returns a status of 204", async () => {
+    const expected = 204;
+
+    const actual = await request(server).delete("/api/concerns/6");
+
+    expect(actual.status).toBe(expected);
+  });
+
+  it("updates an upvote count and returns 201", async () => {
+    const expected = 201;
+
+    const actual = await request(server).put("/api/concerns/upvotes/29");
+
+    expect(actual.status).toBe(expected);
+  });
 });
