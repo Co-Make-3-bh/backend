@@ -70,4 +70,17 @@ router.put("/:postId", (req, res) => {
     });
 });
 
+router.delete("/:postId", (req, res) => {
+  db.delete(req.params.postId)
+    .then((result) => {
+      res
+        .status(204)
+        .json({ data: `Post Deleted with id of ${req.params.postId}` });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ error: err });
+    });
+});
+
 module.exports = router;
