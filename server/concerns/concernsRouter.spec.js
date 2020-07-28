@@ -24,6 +24,7 @@ describe("concerns", () => {
       title: "Example",
       description: "Example Desc",
       createdBy: 0,
+      zip: "49441",
     };
 
     const expected = "object";
@@ -38,6 +39,7 @@ describe("concerns", () => {
       title: "Example",
       description: "Example Desc",
       createdBy: 0,
+      zip: "49442",
     };
 
     const expected = 201;
@@ -55,11 +57,5 @@ describe("concerns", () => {
     expect(actual.status).toBe(expected);
   });
 
-  it("returns a status of 204 on delete", async () => {
-    const expected = 204;
 
-    const actual = await request(server).delete("/api/concerns/1");
-
-    expect(actual.status).toBe(expected);
-  });
 });
