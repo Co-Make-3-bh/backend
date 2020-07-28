@@ -10,6 +10,21 @@ exports.seed = function (knex) {
           title: "Greatest Concern",
           description: "concern seed 1",
           createdBy: 0,
+          zip: "49441",
+        },
+        {
+          id: 1,
+          title: "Greatest Concern",
+          description: "concern seed 1",
+          createdBy: 0,
+          zip: "49441",
+        },
+        {
+          id: 2,
+          title: "Greatest Concern",
+          description: "concern seed 1",
+          createdBy: 0,
+          zip: "49442",
         },
       ]);
     });
