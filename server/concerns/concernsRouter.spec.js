@@ -71,4 +71,14 @@ describe("concerns", () => {
 
     expect(typeof actual.body.data[0]).toBe(expected);
   });
+
+  it("edits a concern", async () => {
+    const expected = 201;
+
+    const actual = await request(server)
+      .put("/api/concerns/0")
+      .send({ title: "UPDATED HAHA" });
+
+    expect(actual.status).toBe(expected);
+  });
 });

@@ -34,6 +34,7 @@ Current Routes Available.
 | /api/concerns                  | GET  | N/A                             | ARRAY                              | Authorization |
 | /api/concerns                  | POST | {title, description, createdBy} | AFFECTED                           | Authorization |
 | /api/concerns/createdBy/userId | GET  | N/A                             | ARRAY                              | Authorization |
+| /api/concerns/byZip/zip        | GET  | N/A                             | ARRAY                              | Authorization |
 
 ### Schemas
 

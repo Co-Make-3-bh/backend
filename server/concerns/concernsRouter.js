@@ -12,6 +12,10 @@ DBAccess.prototype.getByZip = function (zip) {
   return this.db.select("*").from(this.table).where({ zip: zip });
 };
 
+DBAccess.prototype.editConcern = function (updates, postId) {
+  return this.db(this.table).update(updates).where({ id: postId });
+};
+
 const helpers = require("./concernHelpers");
 
 router.get("/", (req, res) => {
@@ -52,6 +56,16 @@ router.get("/createdBy/:userId", (req, res) => {
     })
     .catch((err) => {
       console.log(err);
+      res.status(500).json({ error: err });
+    });
+});
+
+router.put("/:postId", (req, res) => {
+  db.editConcern(req.body, req.params.postId)
+    .then((result) => {
+      res.status(201).json({ data: result });
+    })
+    .catch((err) => {
       res.status(500).json({ error: err });
     });
 });
