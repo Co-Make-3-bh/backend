@@ -37,6 +37,7 @@ Current Routes Available.
 | /api/concerns/byZip/zip        | GET    | N/A                                                                | ARRAY                              | Authorization |
 | /api/concerns/postId           | PUT    | Object with key value updates, the whole object or just part of it | AFFECTED                           | Authorization |
 | /api/concerns/postId           | DELETE | N/A                                                                | Success Message                    | Authorization |
+| /api/concerns/upvotes/postId   | PUT    | N/A                                                                | New Post Object                    | Authorization |
 
 ### Schemas
 

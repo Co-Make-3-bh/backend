@@ -16,6 +16,10 @@ DBAccess.prototype.editConcern = function (updates, postId) {
   return this.db(this.table).update(updates).where({ id: postId });
 };
 
+DBAccess.prototype.addUpvote = function (postId, upvotes) {
+  return this.db(this.table).update({ upvotes: upvotes }).where({ id: postId });
+};
+
 const helpers = require("./concernHelpers");
 
 router.get("/", (req, res) => {
@@ -79,6 +83,28 @@ router.delete("/:postId", (req, res) => {
     })
     .catch((err) => {
       console.log(err);
+      res.status(500).json({ error: err });
+    });
+});
+
+router.put("/upvotes/:postId", async (req, res) => {
+  const postBefore = await db.findBy({ id: req.params.postId });
+
+  if (!postBefore) {
+    return res.status(404).json({ error: "No Post Found" });
+  }
+
+  db.addUpvote(req.params.postId, postBefore.upvotes + 1)
+    .then((result) => {
+      db.findBy({ id: req.params.postId })
+        .then((post) => {
+          return res.status(201).json({ data: post });
+        })
+        .catch((err) => {
+          res.status(500).json({ error: err });
+        });
+    })
+    .catch((err) => {
       res.status(500).json({ error: err });
     });
 });
