@@ -20,6 +20,22 @@ DBAccess.prototype.addUpvote = function (postId, upvotes) {
   return this.db(this.table).update({ upvotes: upvotes }).where({ id: postId });
 };
 
+DBAccess.prototype.removeUpvote = function (postId, upvotes) {
+  return this.db(this.table).update({ upvotes: upvotes }).where({ id: postId });
+};
+
+DBAccess.prototype.addLikeRecord = function (data) {
+  return this.db("likes_for_concerns").insert(data);
+};
+
+DBAccess.prototype.removeLikeRecord = function (likeId) {
+  return this.db("likes_for_concerns").del("*").where({ id: likeId });
+};
+
+DBAccess.prototype.findLikes = function (userId) {
+  return this.db("likes_for_concerns").where({ user_id: userId });
+};
+
 const helpers = require("./concernHelpers");
 
 router.get("/", (req, res) => {
@@ -87,7 +103,7 @@ router.delete("/:postId", (req, res) => {
     });
 });
 
-router.put("/upvotes/:postId", async (req, res) => {
+router.put("/upvotes/:postId/:userId", async (req, res) => {
   const postBefore = await db.findBy({ id: req.params.postId });
 
   if (!postBefore) {
@@ -97,11 +113,39 @@ router.put("/upvotes/:postId", async (req, res) => {
   db.addUpvote(req.params.postId, postBefore.upvotes + 1)
     .then((result) => {
       db.findBy({ id: req.params.postId })
-        .then((post) => {
-          return res.status(201).json({ data: post });
+        .then(async (post) => {
+          await db.addLikeRecord({
+            concern_id: req.params.postId,
+            user_id: req.params.userId,
+          });
+          let liked = await db.findLikes(req.params.userId);
+          return res.status(200).json({ data: post, liked });
         })
         .catch((err) => {
           res.status(500).json({ error: err });
+        });
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err });
+    });
+});
+
+router.put("/downvote/:postId/:likeId/:userId", async (req, res) => {
+  const postBefore = await db.findBy({ id: req.params.postId });
+
+  if (!postBefore) {
+    return res.status(404).json({ error: "No Post Found" });
+  }
+
+  db.removeUpvote(req.params.postId, postBefore.upvotes - 1)
+    .then((result) => {
+      db.findBy({ id: req.params.postId })
+        .then(async (post) => {
+          await db.removeLikeRecord(req.params.likeId);
+          return res.status(200).json({ data: post });
+        })
+        .catch((err) => {
+          return res.status(500).json({ error: err });
         });
     })
     .catch((err) => {
