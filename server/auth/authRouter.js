@@ -5,6 +5,14 @@ const nodemailer = require("nodemailer");
 const helpers = require("./authHelpers");
 const db = require("../../database/usersAccess");
 
+const connection = require("../../database/dbConfig");
+const DBAccess = require("knex-db-access");
+likesDB = new DBAccess(connection, "likes_for_concerns");
+
+DBAccess.prototype.findLikes = function (userId) {
+  return this.db(this.table).where({ user_id: userId });
+};
+
 router.post("/register", helpers.verifyBody, async (req, res) => {
   const salt = await bcrypt.genSaltSync(10);
   const hash = await bcrypt.hashSync(req.body.password, salt);
@@ -69,6 +77,8 @@ router.post("/login", async (req, res) => {
     return res.status(400).json({ error: "Email Or Password is Incorrect" });
   }
 
+  const liked = await likesDB.findLikes(user.id);
+
   const verified = await helpers.verifyPassword(password, user.password);
 
   if (!verified) {
@@ -84,7 +94,7 @@ router.post("/login", async (req, res) => {
     zip: user.zip,
   };
 
-  res.status(200).json({ data: toSend, token });
+  res.status(200).json({ data: toSend, token, liked });
 });
 
 module.exports = router;
