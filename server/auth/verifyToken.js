@@ -10,7 +10,6 @@ module.exports = (req, res, next) => {
     const decoded = jwt.verify(token, secret);
 
     if (decoded) {
-      req.body.token = token;
       next();
     } else {
       res.status(400).json({ error: "Could not verify token" });
