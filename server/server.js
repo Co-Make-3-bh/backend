@@ -15,9 +15,9 @@ const auth = require("./auth/authRouter");
 server.use("/api/auth", auth);
 
 const concerns = require("./concerns/concernsRouter");
-// server.use("/api/concerns", verifyToken, concerns);
+server.use("/api/concerns", verifyToken, concerns);
 // For testing
-server.use("/api/concerns", concerns);
+// server.use("/api/concerns", concerns);
 
 server.get("/api", (req, res) => {
   res.status(200).json({ api: "ONLINE" });
