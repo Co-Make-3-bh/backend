@@ -1,7 +1,5 @@
 exports.up = function (knex) {
-  return knex.schema.alterTable("users", (tbl) => {
-    tbl.string("zip").notNullable().defaultTo("");
-  });
+  return knex.schema.alterTable("users", (tbl) => {});
 };
 
 exports.down = function (knex) {

@@ -1,9 +1,5 @@
 exports.up = function (knex) {
-  return knex.schema.alterTable("concerns", (tbl) => {
-    tbl.string("imageURL");
-  });
+  return knex.schema.alterTable("concerns", (tbl) => {});
 };
 
-exports.down = function (knex) {
-  return knex.schema.dropColumn("imageURL");
-};
+exports.down = function (knex) {};
