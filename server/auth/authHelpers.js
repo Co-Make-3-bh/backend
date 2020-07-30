@@ -20,7 +20,12 @@ async function genJWT(user) {
     id: user.id,
     username: user.username,
   };
-  const token = await jwt.sign(payload, secret);
+
+  const options = {
+    expiresIn: "1h",
+  };
+
+  const token = await jwt.sign(payload, secret, options);
   return token;
 }
 
